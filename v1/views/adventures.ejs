@@ -1,0 +1,15 @@
+<% include partials/header %>
+
+<h1>This is the adventures page!</h1>
+
+<a href="/adventures/new">Add new adventures here!</a>
+
+<!--Loop through the adventures array(fornow) and display-->
+<% adventures.forEach(function(adventure) { %>
+    <div>
+        <h4> <%= adventure.name %> </h4>
+        <img src="<%= adventure.image %>">
+    </div>
+<% }); %>
+
+<% include partials/footer %>

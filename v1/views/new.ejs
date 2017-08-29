@@ -1,12 +1,13 @@
 <% include partials/header %>
 
-<h1>Create a new Travel!</h1>
+<h1>Create a new adventure!</h1>
 
-<!--get the form data and add to travels array-->
-<form action="/travels" method="POST">
-    <input type="text" name="name" placeholder="Travel Name">
+<!--get the form data and add to adventures array-->
+<form action="/adventures" method="POST">
+    <input type="text" name="name" placeholder="Adventure Name">
     <input type="text" name="image" placeholder="Image URL">
     <button>Submit</button>
 </form>
 
+<a href="/adventures">Go back to All adventures page</a>
 <% include partials/footer %>
