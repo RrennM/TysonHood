@@ -33,9 +33,12 @@ app.post("/travels", function(req, res) {
 
 // travels page
 app.get("/travels", function(req, res) {
-    
     res.render("travels", {travels: travels});
-    
+});
+
+// Page to add new travels
+app.get("/travels/new", function(req, res) {
+    res.render("new")
 });
 
 app.listen(process.env.PORT, process.env.IP, function() {
