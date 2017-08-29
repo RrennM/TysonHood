@@ -1,15 +1,30 @@
 <% include partials/header %>
 
-<h1>This is the adventures page!</h1>
+<div class="container">
 
-<a href="/adventures/new">Add new adventures here!</a>
-
-<!--Loop through the adventures array(fornow) and display-->
-<% adventures.forEach(function(adventure) { %>
-    <div>
-        <h4> <%= adventure.name %> </h4>
-        <img src="<%= adventure.image %>">
-    </div>
-<% }); %>
+   <header class="jumbotron"> 
+      <div class="container">
+         <h1>This is my adventures page!</h1>
+         <p>Here are some of the great places I've explored!</p>
+         <p>
+            <a class="btn btn-primary btn-lg" href="/adventures/new">Add new adventures here!</a>
+         </p>
+      </div>
+   </header>
+   
+   <div class="row text-center" style="display:flex; flex-wrap:wrap;">
+      <!--Loop through the adventures array(fornow) and display-->
+      <% adventures.forEach(function(adventure) { %>
+      <div class="col-md-3 col-sm-6">
+         <div class="thumbnail">
+           <img src="<%= adventure.image %>">
+            <div class="caption">
+               <h4> <%= adventure.name %> </h4>
+            </div>
+         </div>
+       </div>
+      <% }); %>
+   </div>
+</div>
 
 <% include partials/footer %>
