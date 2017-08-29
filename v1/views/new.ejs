@@ -1,0 +1,12 @@
+<% include partials/header %>
+
+<h1>Create a new Travel!</h1>
+
+<!--get the form data and add to travels array-->
+<form action="/travels" method="POST">
+    <input type="text" name="name" placeholder="Travel Name">
+    <input type="text" name="image" placeholder="Image URL">
+    <button>Submit</button>
+</form>
+
+<% include partials/footer %>
