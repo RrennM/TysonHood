@@ -50,7 +50,8 @@ app.post("/adventures", function(req, res) {
     // get data from form and add to adventures array
     var name = req.body.name;
     var image = req.body.image;
-    var newAdventure = {name: name, image: image};
+    var desc = req.body.description;
+    var newAdventure = {name: name, image: image, description: desc};
     // create a new adventure and save to db
     Adventure.create(newAdventure, function(err, newlyCreated) {
         if(err) {
@@ -69,7 +70,7 @@ app.get("/adventures", function(req, res) {
         if(err) {
             console.log(err);
         } else {
-            res.render("adventures", {adventures: allAdventures})
+            res.render("index", {adventures: allAdventures})
         }
     });
 });
@@ -81,7 +82,14 @@ app.get("/adventures/new", function(req, res) {
 
 // SHOW route - shows info about one adventure
 app.get("/adventures/:id", function(req, res) {
-    res.send("This will be the show page!");
+    // find the adventure with the provided id
+    Adventure.findById(req.params.id, function(err, foundAdventure) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("show", {adventure: foundAdventure});
+        }
+    })
 });
 
 app.listen(process.env.PORT, process.env.IP, function() {
