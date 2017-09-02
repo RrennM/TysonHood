@@ -1,9 +1,27 @@
-.navbar-brand {
-    display: inline-block;
+.container.index, .page-title {
+    text-align: center;
 }
-#brand-image {
-     width: 30;
-     height: 30;
-     margin: auto;
-     display: inline-block;
+
+.blogIndexImage {
+    max-width: 50%;
+}
+
+.row.blogShow {
+    max-width: 60%;
+}
+
+.blogShow {
+    max-width: 80%;
+}
+
+#showDate {
+    margin-bottom: 3em;
+}
+
+#newBlogForm {
+    width: 40%;
+}
+
+#newBlogBtn {
+    margin-bottom: 6em;
 }

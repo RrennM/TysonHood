@@ -15,6 +15,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Auto look for .ejs files
 app.set("view engine", "ejs");
 
+// Contains stylesheets
+app.use(express.static("public"));
+
+
 
 // Schema set up
 var adventureSchema = new mongoose.Schema({
@@ -58,9 +62,9 @@ app.post("/adventures", function(req, res) {
             console.log(err);
         } else {
             // redirect back to adventure page
-            res.redirect("/adventures")
+            res.redirect("/adventures");
         }
-    })
+    });
 });
 
 // CREATE route - add new adventure to db
@@ -70,14 +74,14 @@ app.get("/adventures", function(req, res) {
         if(err) {
             console.log(err);
         } else {
-            res.render("advenIndex", {adventures: allAdventures})
+            res.render("advenIndex", {adventures: allAdventures});
         }
     });
 });
 
 // NEW route - show form to create a new adventure
 app.get("/adventures/new", function(req, res) {
-    res.render("advenNew")
+    res.render("advenNew");
 });
 
 // SHOW route - shows info about one adventure
@@ -89,7 +93,7 @@ app.get("/adventures/:id", function(req, res) {
         } else {
             res.render("advenShow", {adventure: foundAdventure});
         }
-    })
+    });
 });
 
 
@@ -117,7 +121,7 @@ app.get("/blogs", function(req, res) {
     Blog.find({}, function(err, blogs) {
         if(err) {
             console.log(err);
-            res.redirect("/")
+            res.redirect("/");
         } else {
             res.render("blogIndex", {blogs: blogs});
         }
@@ -126,7 +130,43 @@ app.get("/blogs", function(req, res) {
 
 // NEW route
 app.get("/blogs/new", function(req, res) {
-    res.render("new");
+    res.render("blogNew");
+});
+
+// CREATE Route
+app.post("/blogs", function(req, res) {
+    // create blog
+    Blog.create(req.body.blog, function(err, newBlog) {
+        if(err) {
+            // if error, go back to new page
+            res.render("new");
+        } else {
+            // redirect
+            res.redirect("/blogs");
+        }
+    });
+});
+
+// SHOW Route
+app.get("/blogs/:id", function(req, res) {
+   Blog.findById(req.params.id, function(err, foundBlog) {
+       if(err) {
+           res.redirect("/blogs");
+       } else {
+           res.render("blogShow", {blog: foundBlog});
+       }
+   });
+});
+
+// EDIT route
+app.get("/blogs/:id", function (req, res) {
+   Blog.findById(req.params.id, function(err, foundBlog) {
+       if(err) {
+           res.redirect("/blogs");
+       } else {
+           res.render("blogEdit", {blog: foundBlog});
+       }
+   });
 });
 
 app.listen(process.env.PORT, process.env.IP, function() {
