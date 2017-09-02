@@ -6,12 +6,12 @@
     <% blogs.forEach(function(blog) {%>
         <div class="container index">
             <h2><%=blog.title %></h2> 
-            <img src="<%=blog.image %>" class="blogIndexImage">
+            <img src="<%-blog.image %>" class="blogIndexImage">
             <div class="content">
                <span><%=blog.created.toDateString() %></span>
             </div>
-        <p><%=blog.body.substring(0, 100) %>...</p>
-        <a type="button" class="btn btn-info" href="/blogs/<%= blog._id %>">Read More</a>
+            <p><%=blog.body.substring(0, 100) %>...</p>
+            <a type="button" class="btn btn-info" href="/blogs/<%= blog._id %>">Read More</a>
         </div>
     <% }); %>
 

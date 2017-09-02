@@ -1,7 +1,8 @@
-var express     = require("express"),
-    app         = express(),
-    bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose");
+var express         = require("express"),
+    app             = express(),
+    bodyParser      = require("body-parser"),
+    mongoose        = require("mongoose"),
+    methodOverride  = require("method-override");
     
 // make Mongoose error go away
 mongoose.Promise = global.Promise; 
@@ -17,6 +18,9 @@ app.set("view engine", "ejs");
 
 // Contains stylesheets
 app.use(express.static("public"));
+
+// include method-override in our app
+app.use(methodOverride("_method"));
 
 
 
@@ -159,7 +163,7 @@ app.get("/blogs/:id", function(req, res) {
 });
 
 // EDIT route
-app.get("/blogs/:id", function (req, res) {
+app.get("/blogs/:id/edit", function (req, res) {
    Blog.findById(req.params.id, function(err, foundBlog) {
        if(err) {
            res.redirect("/blogs");
@@ -167,6 +171,17 @@ app.get("/blogs/:id", function (req, res) {
            res.render("blogEdit", {blog: foundBlog});
        }
    });
+});
+
+// UPDATE Route
+app.put("/blogs/:id", function(req, res) {
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog) {
+        if(err) {
+            res.redirect("/blogs");
+        } else {
+            res.redirect("/blogs/" + req.params.id);
+        }
+    });
 });
 
 app.listen(process.env.PORT, process.env.IP, function() {

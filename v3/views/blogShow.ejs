@@ -8,9 +8,10 @@
         </div>
         <div class="description blogShow">
             <p>
-                <%= blog.body %>
+                <%- blog.body %>
             </p>
         </div>
+        <a type="button" class="btn btn-warning" href="/blogs/<%= blog._id %>/edit">Edit</a>
     </div>
 </div>
 <% include ./partials/footer %>
