@@ -70,14 +70,14 @@ app.get("/adventures", function(req, res) {
         if(err) {
             console.log(err);
         } else {
-            res.render("index", {adventures: allAdventures})
+            res.render("advenIndex", {adventures: allAdventures})
         }
     });
 });
 
 // NEW route - show form to create a new adventure
 app.get("/adventures/new", function(req, res) {
-    res.render("new")
+    res.render("advenNew")
 });
 
 // SHOW route - shows info about one adventure
@@ -87,9 +87,46 @@ app.get("/adventures/:id", function(req, res) {
         if(err) {
             console.log(err);
         } else {
-            res.render("show", {adventure: foundAdventure});
+            res.render("advenShow", {adventure: foundAdventure});
         }
     })
+});
+
+
+
+// BLOG PAGE
+var blogSchema = new mongoose.Schema({
+    title: String,
+    image: String,
+    body: String,
+    created: {type: Date, default: Date.now}
+});
+
+var Blog = mongoose.model("Blog", blogSchema);
+
+// Temporary blog post
+// Blog.create({
+//     title: "First Blog",
+//     image: "https://amazinganimalphotos.com/wp-content/uploads/2013/04/cutest-cat-picture-ever.jpg",
+//     body: "Today, I have officially started my own blog for my own site!"
+// })
+
+// RESTful routing - Blog page
+// INDEX Route
+app.get("/blogs", function(req, res) {
+    Blog.find({}, function(err, blogs) {
+        if(err) {
+            console.log(err);
+            res.redirect("/")
+        } else {
+            res.render("blogIndex", {blogs: blogs});
+        }
+    });
+});
+
+// NEW route
+app.get("/blogs/new", function(req, res) {
+    res.render("new");
 });
 
 app.listen(process.env.PORT, process.env.IP, function() {
