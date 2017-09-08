@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="well">
-                <h3 style="text-align: center; margin: 50px 0;">Have a comment or question?</h3>
+                <h3 class="commentTitle">Have a comment or question?</h3>
                 <hr>
                 <% adventure.comments.forEach(function(comment) {%>
                     <p>
@@ -32,7 +32,7 @@
                 <% });%>
                 <hr>
                 <div class="text-center">
-                <h3 style="text-align: center; margin: 50px 0;">Write your comment here!</h3>
+                <h3 class="commentTitle">Write your comment here!</h3>
                 <div style="width: 60%; margin: 30px auto;">
                   <!--get the form data and add to adventures array-->
                   <form action="/adventures/<%= adventure._id%>/comments" method="POST">
