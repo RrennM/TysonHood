@@ -1,0 +1,29 @@
+.commentTitle {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.blogIndexImage {
+    max-width: 50%;
+}
+
+#showDate {
+    margin-bottom: 1em;
+}
+
+#blogBkgrnd {
+    background: lightblue;
+}
+
+#goBackBtn {
+    padding: 0;
+}
+
+#showDate {
+    margin-top: 10px;
+}
+
+#newBlogBtn {
+    margin-top: 3em;
+    margin-bottom: 3em;
+}

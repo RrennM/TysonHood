@@ -2,10 +2,6 @@
     text-align: center;
 }
 
-.blogIndexImage {
-    max-width: 50%;
-}
-
 .row.show {
     max-width: 60%;
 }
@@ -26,23 +22,10 @@
     padding: 9px;
 }
 
-
-#showDate {
-    margin-bottom: 3em;
-}
-
 #newBlogForm {
     width: 40%;
 }
 
-#newBlogBtn {
-    margin-bottom: 6em;
-}
-
 #delete {
     margin-top: 5px;
-}
-
-#adventureDesc {
-    margin-top: 25px;
 }
