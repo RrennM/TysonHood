@@ -16,13 +16,12 @@
             <button class="btn btn-danger">Delete</button>
         </form>
     </div>
-    <div calss="row">
+    
     <% blog.comments.forEach(function(comment) { %>
         <p>
             <strong><%= comment.author %></strong>:  <%= comment.text %>
         </p>
     <% }); %>
-    </div>
     
     
     <div class="row">

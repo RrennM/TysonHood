@@ -13,11 +13,19 @@
             <button class="btn btn-danger">Delete</button>
         </form>
     </div>
+    
+    <% adventure.comments.forEach(function(comment) {%>
+        <p>
+            <strong><%= comment.author %></strong>: <%= comment.text %>
+        </p>
+    <% });%>
+    
+    
     <div class="row">
     <h3 style="text-align: center; margin: 50px 0;">Have a comment or question?</h3>
     <div style="width: 60%; margin: 30px auto;">
       <!--get the form data and add to adventures array-->
-      <form action="/adventures" method="POST">
+      <form action="/adventures/<%= adventure._id%>/comments" method="POST">
         <div class="form-group">
           <input class="form-control" type="text" name="comment[author]" placeholder="Author">
         </div>

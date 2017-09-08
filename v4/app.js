@@ -11,7 +11,7 @@ var express         = require("express"),
 mongoose.Promise = global.Promise; 
 
 // connect to mongoose, make db, and make next error go away
-mongoose.connect("mongodb://localhost/tyson_hood", {useMongoClient: true});
+mongoose.connect("mongodb://localhost/tyson_hood_v4", {useMongoClient: true});
 
 // Tell our app to use body-parser
 app.use(bodyParser.urlencoded({extended: true}));
@@ -73,7 +73,7 @@ app.get("/adventures/new", function(req, res) {
 // SHOW route - shows info about one adventure
 app.get("/adventures/:id", function(req, res) {
     // find the adventure with the provided id
-    Adventure.findById(req.params.id, function(err, foundAdventure) {
+    Adventure.findById(req.params.id).populate("comments").exec(function(err, foundAdventure) {
         if(err) {
             console.log(err);
         } else {
@@ -87,6 +87,29 @@ app.get("/adventures/:id", function(req, res) {
 // ======================ADVENTURES=================================
 // =======================COMMENTS==================================
 // =================================================================
+
+app.post("/adventures/:id/comments", function(req, res) {
+    // look up adventure using is
+    Adventure.findById(req.params.id, function(err, adventure) {
+        if(err) {
+            console.log(err);
+            res.redirect("/adventures");
+        } else {
+            // create new comments
+            Comment.create(req.body.comment, function(err, comment) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    // connect new comment to adventure
+                    adventure.comments.push(comment);
+                    adventure.save();
+                    // redirect to show page
+                    res.redirect("/adventures/" + adventure._id);
+                }
+            });
+        }
+    });
+})
 
 
 // =================================================================
