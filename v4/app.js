@@ -29,6 +29,9 @@ app.use(methodOverride("_method"));
 // "sanitize" script tags from editable text areas
 app.use(expressSanitizer());
 
+// use public directory
+app.use(express.static(__dirname + "/public"))
+
 // ROOT Route/Landing page
 app.get("/", function(req, res) {
    res.render("landing"); 
