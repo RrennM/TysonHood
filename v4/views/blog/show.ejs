@@ -1,12 +1,12 @@
-<% include ./partials/header %>
+<% include ../partials/header %>
 <div class="container">
-    <div class="row blogShow">
-        <h1 class="blogShow"><%=blog.title %><a type="button" class="btn btn-link" style="float:right;" href="/blogs">Go Back</a></h1>
-        <img src="<%=blog.image %>" class="blogShow">
+    <div class="row show">
+        <h1 class="show"><%=blog.title %><a type="button" class="btn btn-link" style="float:right;" href="/blogs">Go Back</a></h1>
+        <img src="<%=blog.image %>" class="show">
         <div class="content" id="showDate">
            <span><%=blog.created.toDateString() %></span>
         </div>
-        <div class="description blogShow">
+        <div class="description show">
             <p>
                 <%- blog.body %>
             </p>
@@ -16,5 +16,31 @@
             <button class="btn btn-danger">Delete</button>
         </form>
     </div>
+    <div calss="row">
+    <% blog.comments.forEach(function(comment) { %>
+        <p>
+            <strong><%= comment.author %></strong>:  <%= comment.text %>
+        </p>
+    <% }); %>
+    </div>
+    
+    
+    <div class="row">
+    <h3 style="text-align: center; margin: 50px 0;">Have a comment or question for <%= blog.title %>?</h3>
+    <div style="width: 60%; margin: 30px auto;">
+      <!--get the form data and add to adventures array-->
+      <form action="/blogs/<%= blog._id %>/comments" method="POST">
+        <div class="form-group">
+          <input class="form-control" type="text" name="comment[author]" placeholder="Author">
+        </div>
+        <div class="form-group">
+          <textarea class="form-control"  type="text" name="comment[text]" placeholder="Text..." rows="6"></textarea>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-lg btn-success btn-block">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
-<% include ./partials/footer %>
+<% include ../partials/footer %>

@@ -127,7 +127,7 @@ app.post("/blogs", function(req, res) {
 
 // SHOW Route
 app.get("/blogs/:id", function(req, res) {
-   Blog.findById(req.params.id, function(err, foundBlog) {
+   Blog.findById(req.params.id).populate("comments").exec(function(err, foundBlog) {
        if(err) {
            res.redirect("/blogs");
        } else {
@@ -174,6 +174,30 @@ app.delete("/blogs/:id", function(req, res) {
 // =========================BLOG====================================
 // =======================COMMENTS==================================
 // =================================================================
+
+// CREATE Route
+app.post("/blogs/:id/comments", function(req, res) {
+    // lookup blog using id
+    Blog.findById(req.params.id, function(err, blog) {
+        if(err) {
+            console.log(err);
+            res.redirect("/blogs");
+        } else {
+            // create new comments
+            Comment.create(req.body.comment, function(err, comment) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    // connect new comment to blog
+                    blog.comments.push(comment);
+                    blog.save();
+                    // redirect to show page
+                    res.redirect("/blogs/" + blog._id);
+                }
+            });
+        }
+    });
+});
 
 app.listen(process.env.PORT, process.env.IP, function() {
    console.log("The server is listening") ;
