@@ -1,21 +1,18 @@
 <% include ../partials/header %>
 <div class="container">
   <div class="row">
-    <h1 style="text-align: center">Post a new adventure!</h1>
+    <h1 style="text-align: center">Edit: <%= adventure.name %></h1>
     <div style="width: 30%; margin: 30px auto;">
       <!--get the form data and add to adventures array-->
-      <form action="/adventures" method="POST">
+      <form action="/adventures/<%= adventure._id %>?_method=PUT" method="POST">
         <div class="form-group">
-          <label>Name of location</label>
-          <input class="form-control" type="text" name="adventure[name]" placeholder="Name">
+          <input class="form-control" type="text" name="adventure[name]" value="<%= adventure.name %>">
         </div>
         <div class="form-group">
-          <label>Image</label>
-          <input class="form-control"  type="text" name="adventure[image]" placeholder="Image URL">
+          <input class="form-control"  type="text" name="adventure[image]" value="<%= adventure.image %>">
         </div>
         <div class="form-group">
-          <label>Description</label>
-          <textarea class="form-control"  type="text" name="adventure[desc]" placeholder="Description"></textarea>
+          <textarea class="form-control" name="adventure[desc]" value="<%- adventure.desc %>"></textarea>
         </div>
         <div class="form-group">
           <button class="btn btn-lg btn-primary btn-block">Submit</button>

@@ -20,7 +20,7 @@ var mongoose = require("mongoose");
 var adventureSchema = new mongoose.Schema({
     name: String,
     image: String,
-    description: String,
+    desc: String,
     comments: [
         {
             type: mongoose.Schema.Types.ObjectId,

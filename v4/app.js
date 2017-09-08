@@ -1,11 +1,12 @@
-var express         = require("express"),
-    app             = express(),
-    bodyParser      = require("body-parser"),
-    mongoose        = require("mongoose"),
-    methodOverride  = require("method-override"),
-    Adventure       = require("./models/adventure"),
-    Blog            = require("./models/blog"),
-    Comment         = require("./models/comment");
+var express             = require("express"),
+    app                 = express(),
+    bodyParser          = require("body-parser"),
+    mongoose            = require("mongoose"),
+    methodOverride      = require("method-override"),
+    expressSanitizer    = require("express-sanitizer"),
+    Adventure           = require("./models/adventure"),
+    Blog                = require("./models/blog"),
+    Comment             = require("./models/comment");
     
 // make Mongoose error go away
 mongoose.Promise = global.Promise; 
@@ -24,6 +25,9 @@ app.use(express.static("public"));
 
 // include method-override in our app
 app.use(methodOverride("_method"));
+
+// "sanitize" script tags from editable text areas
+app.use(expressSanitizer());
 
 // ROOT Route/Landing page
 app.get("/", function(req, res) {
@@ -49,13 +53,10 @@ app.get("/adventures", function(req, res) {
 
 // CREATE route - add new adventure to db
 app.post("/adventures", function(req, res) {
-    // get data from form and add to adventures array
-    var name = req.body.name;
-    var image = req.body.image;
-    var desc = req.body.description;
-    var newAdventure = {name: name, image: image, description: desc};
+    // "Sanitize" and script tags from editable text boxes
+    // req.body.adventure.desc = req.sanitize(req.body.adventure.desc);
     // create a new adventure and save to db
-    Adventure.create(newAdventure, function(err, newlyCreated) {
+    Adventure.create(req.body.adventure, function(err, newAdventure) {
         if(err) {
             console.log(err);
         } else {
@@ -81,6 +82,45 @@ app.get("/adventures/:id", function(req, res) {
         }
     });
 });
+
+// EDIT Route
+app.get("/adventures/:id/edit", function(req, res) {
+    // "Sanitize" and script tags from editable text boxes
+    // req.body.adventure.desc = req.sanitize(req.body.adventure.desc);
+    Adventure.findById(req.params.id, function(err, foundAdventure) {
+        if(err) {
+            console.log(err);
+            res.redirect("/adventures");
+        } else {
+            res.render("adventures/edit", {adventure: foundAdventure});
+        }
+    });
+});
+
+// UPDATE Route
+app.put("/adventures/:id", function(req, res) {
+    // "Sanitize" and script tags from editable text boxes
+    // req.body.adventure.desc = req.sanitize(req.body.adventure.desc);
+    Adventure.findByIdAndUpdate(req.params.id, req.body.adventure, function(err, updatedAdventure) {
+        if(err) {
+            console.log(err);
+            res.redirect("/adventures");
+        } else {
+            res.redirect("/adventures/" + req.params.id);
+        }
+    });
+});
+
+// DESTROY Route
+app.delete("/adventures/:id", function(req, res) {
+    Adventure.findByIdAndRemove(req.params.id, function(err) {
+        if(err) {
+            res.redirect("/adventures");
+        } else {
+            res.redirect("/adventures");
+        }
+    })
+})
 
 
 // =================================================================
