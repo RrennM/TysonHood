@@ -1,0 +1,30 @@
+.container.index, .page-title {
+    text-align: center;
+}
+
+.blogIndexImage {
+    max-width: 50%;
+}
+
+.row.blogShow {
+    max-width: 60%;
+}
+
+.blogShow {
+    max-width: 80%;
+}
+
+#showDate {
+    margin-bottom: 3em;
+}
+
+#newBlogForm {
+    width: 40%;
+}
+
+#newBlogBtn {
+    margin-bottom: 6em;
+}
+#delete {
+    margin-top: 5px;
+}
